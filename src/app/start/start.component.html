@@ -1,0 +1,41 @@
+<div class="container mx-auto mt-50">
+  <h1 class="text-32 text-center font-bold">Darts game</h1>
+  <form class="max-w-500 mx-auto" [formGroup]="startForm" (ngSubmit)="startGame()">
+    <div class="my-20 flex justify-center">
+      <label class="flex cursor-pointer w-fit">
+        <div
+          [ngClass]="{
+              'p-20 border-4 text-20 font-bold rounded-l-lg': true,
+              'border-blue-600': points
+            }"
+        >
+          501
+        </div>
+        <div
+          [ngClass]="{
+              'p-20 border-4 text-20 font-bold rounded-r-lg': true,
+              'border-blue-600': !points
+            }"
+        >
+          301
+        </div>
+        <input type="checkbox" class="sr-only" formControlName="points">
+      </label>
+    </div>
+    <div class="flex flex-col gap-5" formArrayName="players">
+      <input *ngFor="let player of players.controls; let number = index" placeholder="Player {{ number + 1 }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" formControlName="{{ number }}"/>
+    </div>
+    <div class="flex justify-center gap-10 mt-10">
+      <button type="button" class="text-14 font-bold text-green-700 hover:underline" (click)="addPlayer()">Add Player</button>
+      <button type="button" class="text-14 font-bold text-red-700 hover:underline" (click)="removePlayer()">Remove Player</button>
+    </div>
+    <div class="mt-20 flex justify-center">
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-14 gap-5 p-10 text-center inline-flex items-center">
+        Submit
+        <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+        </svg>
+      </button>
+    </div>
+  </form>
+</div>

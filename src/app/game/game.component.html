@@ -1,0 +1,41 @@
+<div class="container mx-auto mt-50" *ngIf="game">
+  <h4 class="text-center font-semibold text-20 my-20">Au tour de {{ game.currentPlayer.mName }}</h4>
+
+  <div class="max-w-500 flex flex-col gap-20 mx-auto">
+    <form *ngIf="!game.hasWinner()" [formGroup]="gameForm" (ngSubmit)="play()">
+      <div class="flex flex-col gap-5" formArrayName="throws">
+        <input type="number" *ngFor="let throw of throws.controls; let number = index" placeholder="Lancer n°{{ number + 1 }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" formControlName="{{ number }}"/>
+      </div>
+      <div class="flex justify-center mt-10">
+        <button class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-14 gap-5 p-10 text-center inline-flex items-center" type="submit">Jouer</button>
+      </div>
+    </form>
+    <div class="mt-20">
+      <table class="w-full text-sm text-left text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase">
+          <tr>
+            <th class="px-20 py-10 bg-gray-50 rounded-tl-lg">Position</th>
+            <th class="px-20 py-10">Nom</th>
+            <th class="px-20 py-10 bg-gray-50 rounded-tr-lg">Point</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            [ngClass]="{
+              'border-b border-gray-200' : i !== game.players.length - 1,
+              'font-bold': player.mPoint == 0
+            }"
+            *ngFor="let player of game.players; let i = index;"
+          >
+            <td class="px-20 py-12 bg-gray-50" [ngClass]="{'rounded-bl-lg' : i === game.players.length - 1}">{{ i + 1 }}</td>
+            <td class="px-20 py-12">{{ player.mName }}</td>
+            <td class="px-20 py-12 bg-gray-50" [ngClass]="{'rounded-br-lg' : i === game.players.length - 1}">{{ player.mPoint }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="game.hasWinner()" class="mt-20 flex justify-center">
+      <a [routerLink]="['/']" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-14 gap-5 p-10 text-center inline-flex items-center" type="submit">Accueil</a>
+    </div>
+  </div>
+</div>
